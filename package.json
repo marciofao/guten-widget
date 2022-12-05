@@ -1,0 +1,27 @@
+{
+  "name": "guten-widget",
+  "version": "1.0.0",
+  "description": "simple gutenberg widget",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "\t"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marciofao/guten-widget.git"
+  },
+  "keywords": [
+    "gutenberg",
+    "wordpress",
+    "block"
+  ],
+  "author": "marciofao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/marciofao/guten-widget/issues"
+  },
+  "homepage": "https://github.com/marciofao/guten-widget#readme",
+  "devDependencies": {
+    "@wordpress/scripts": "24.6.0"
+  }
+}
