@@ -8,10 +8,11 @@ Plugin Name: Guten Widget
 
 require_once('resort_now_render.php');
 require_once('FnuggHandler.php');
-function gutenberg_examples_01_register_block() {
+
+function resort_now_block() {
     register_block_type( __DIR__ );
 }
-add_action( 'init', 'gutenberg_examples_01_register_block' );
+add_action( 'init', 'resort_now_block' );
 
 // automatically load dependencies and version
 $asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
