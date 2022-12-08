@@ -7,10 +7,11 @@ function resort_now_render($content, $value){
 }
 
 function resort_now_block_build($value){
+    $endpoint = get_option('siteurl').'/wp-json/wp/v2/guten-widget?s=';
     $blockcontent = <<<EOD
 
     
-    <b>$value</b>
+    
     <div class="resort-now-block">
         <div class="rnb-title">
             title
@@ -34,18 +35,22 @@ function resort_now_block_build($value){
                 </div>
                 <div class="rnb-wind">
                 <p class="dashicons dashicons-arrow-up-alt2"></p>
-                <p id="rnb-wind">wind</p>
+                <p id="rnb-wind">
+                <span class="value"></span>
+                <span>mps</span>
+                </p>
                     
                 </div>
             </div>
             <div class="rnb-side">
                 <div class="rnb-temperature">
-                    23°
+                    <span class="value"></span>
+                    <span>°</span>
                 </div>
                 <div class="rnb-snow">
                 <p class="dashicons dashicons-chart-line"></p>
-                <p id="rnb-snow">
-                snow
+                <p class="value">
+                
                 </p>
                     
                 </div>
@@ -53,6 +58,9 @@ function resort_now_block_build($value){
         </div>
         
     </div>
+    <script> 
+    rnb_fetch('$value', '$endpoint')
+    </script>
         
     
     EOD;

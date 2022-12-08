@@ -80,5 +80,15 @@ add_action('init', 'rnb_style');
 
 function rnb_style()
 {
-    wp_enqueue_style('rnb-style', plugin_dir_url( __FILE__ ).'style.css', array(), rand(0,99999));
+    
 }
+
+function rnb_scripts($hook) {
+
+	
+	wp_enqueue_script( 'custom_js', plugins_url( 'rnb-fetch.js', __FILE__ ), array(), rand(0,99999) );
+	wp_enqueue_style('rnb-style', plugins_url( 'style.css', __FILE__ ), array(), rand(0,99999));
+  
+
+}
+add_action('wp_enqueue_scripts', 'rnb_scripts');
