@@ -6,8 +6,8 @@
 Plugin Name: Guten Widget
 */
 
-require_once('resort_now_render.php');
 require_once('FnuggHandler.php');
+require_once('resort_now_render.php');
 
 function resort_now_block() {
     register_block_type( __DIR__ );
@@ -74,3 +74,11 @@ register_block_type( 'core/resort-now', array(
     'api_version' => 2,
     'render_callback' => 'myguten_render_paragraph',
 ) );
+
+
+add_action('init', 'rnb_style');
+
+function rnb_style()
+{
+    wp_enqueue_style('rnb-style', plugin_dir_url( __FILE__ ).'style.css', array(), rand(0,99999));
+}
