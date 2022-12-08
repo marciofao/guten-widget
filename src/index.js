@@ -35,7 +35,7 @@ registerBlockType( 'core/resort-now', {
         return (
             <div { ...blockProps }>
                 <TextControl
-                    label="Meta Block Field"
+                    label="Resort Query"
                     value={ metaFieldValue }
                     onChange={ updateMetaValue }
                 />
