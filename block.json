@@ -1,0 +1,8 @@
+{
+	"apiVersion": 2,
+	"title": "Example: Basic (ESNext)",
+	"name": "multivision/resort-now",
+	"category": "media",
+	"icon": "universal-access-alt",
+	"editorScript": "file:./build/index.js"
+}

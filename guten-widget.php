@@ -1,26 +1,31 @@
 <?php
 
+//ini_set('display_errors', 1); ini_set('display_startup_errors', 1); error_reporting(E_ALL);
+
 /*
 Plugin Name: Guten Widget
 */
 
-
-function myguten_enqueue_2() {
-    wp_enqueue_script(
-        'myguten-script',
-        plugins_url( 'build/index.js', __FILE__ ),
-        array( 'wp-blocks' )
-    );
+require_once('resort_now_render.php');
+require_once('FnugHandler.php');
+function gutenberg_examples_01_register_block() {
+    register_block_type( __DIR__ );
 }
-add_action( 'enqueue_block_editor_assets', 'myguten_enqueue_2' );
+add_action( 'init', 'gutenberg_examples_01_register_block' );
 
-function myguten_stylesheet() {
-    wp_enqueue_style( 'myguten-style', plugins_url( 'style.css', __FILE__ ) );
-}
-add_action( 'enqueue_block_assets', 'myguten_stylesheet' );
+// automatically load dependencies and version
+$asset_file = include( plugin_dir_path( __FILE__ ) . 'build/index.asset.php');
 
+wp_register_script(
+    'gutenberg-examples-03-esnext',
+    plugins_url( 'build/index.js', __FILE__ ),
+    $asset_file['dependencies'],
+    $asset_file['version']
+);
 
-
+/*
+ * usage: http://localhost/multivision/wp-json/wp/v2/guten-widget?s=fonna
+ */
 function gw_setup() {
 
     register_rest_route('wp/v2', '/guten-widget', array(
@@ -33,14 +38,8 @@ add_action( 'init', 'gw_setup' );
 
 function fnugg_handler($data) {
 
-    $search = $data->get_param('s');
-    $gt_url = "https://api.fnugg.no/suggest/autocomplete/?q=".$search;
-    $response = wp_remote_get($gt_url);
-
-    $result = new WP_REST_Response($response, 200);
-    // Set cache.
-    $result->set_headers(array('Cache-Control' => 'max-age=3600'));
-    return $result;
+   $res = new FnugHandler($data);
+   return $res->handle_request();
 }
 
 function dump_die($a){
@@ -48,3 +47,29 @@ function dump_die($a){
     var_dump($a);
     die;
 }
+
+// register custom meta tag field
+function myguten_register_post_meta() {
+    register_post_meta( 'post', 'resort_now', array(
+        'show_in_rest' => true,
+        'single' => true,
+        'type' => 'string',
+    ) );
+}
+add_action( 'init', 'myguten_register_post_meta' );
+
+
+function myguten_render_paragraph( $block_attributes, $content ) {
+    $value = get_post_meta( get_the_ID(), 'resort_now', true );
+    // check value is set before outputting
+    if ( $value ) {
+        return resort_now_render($content,$value);
+    } else {
+        return $content;
+    }
+}
+
+register_block_type( 'core/resort-now', array(
+    'api_version' => 2,
+    'render_callback' => 'myguten_render_paragraph',
+) );
