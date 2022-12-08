@@ -1,7 +1,7 @@
 <?php
 
 
-class FnugHandler
+class FnuggHandler
 {
     public $params;
 

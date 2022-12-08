@@ -7,7 +7,7 @@ Plugin Name: Guten Widget
 */
 
 require_once('resort_now_render.php');
-require_once('FnugHandler.php');
+require_once('FnuggHandler.php');
 function gutenberg_examples_01_register_block() {
     register_block_type( __DIR__ );
 }
@@ -38,7 +38,7 @@ add_action( 'init', 'gw_setup' );
 
 function fnugg_handler($data) {
 
-   $res = new FnugHandler($data);
+   $res = new FnuggHandler($data);
    return $res->handle_request();
 }
 
